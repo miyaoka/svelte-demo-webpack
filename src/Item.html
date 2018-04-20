@@ -1,0 +1,36 @@
+<button class="item" on:click="inc()">
+  Item {item} + {plus} = {leftPad(item2)}
+</button>
+<slot>
+  <!-- content is injected here -->
+</slot>
+
+<script>
+  export default {
+    helpers: {
+      leftPad: (val) => '0' + val
+    },
+    data() {
+      return {
+        item: 0,
+        plus: 5
+      }
+    },
+    computed: {
+      item2: ({ item, plus }) => item + plus
+    },
+    methods: {
+      inc() {
+        const { item } = this.get();
+        // this.set({ item: item + 1 })
+        this.fire('item', { item: item + 1 })
+      }
+    }
+  }
+</script>
+
+<style>
+  .item {
+    background: #ffc;
+  }
+</style>

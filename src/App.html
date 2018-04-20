@@ -1,0 +1,49 @@
+<h1>Hello Hello {name}!</h1>
+
+<input bind:value="search" type="number">
+
+<h2>items greater than {search}</h2>
+count: {filteredItems.length}
+<ul>
+  {#each filteredItems as item, i}
+  <li>
+    {item}:
+    <ul>
+      <li>
+        <Item item='{ item }' on:item="splice('items', i, 1, event.item)">
+          index:{i}
+        </Item>
+      </li>
+    </ul>
+  </li>
+  {/each}
+</ul>
+
+
+<script>
+  import { splice } from 'svelte-extras';
+  import Item from './Item.html'
+  export default {
+    data() {
+      return {
+        items: [2, 3, 5, 7],
+        search: 0
+      }
+    },
+    components: {
+      Item
+    },
+    computed: {
+      filteredItems: ({ items, search }) => items.filter(item => item > Number(search))
+    },
+    methods: {
+      splice
+    }
+  }
+</script>
+
+<style>
+  h1 {
+    color: purple;
+  }
+</style>
